@@ -11,3 +11,5 @@ contactRoutes.patch('/:id', ensureTokenIsValidMiddleware, updateContactsControll
 contactRoutes.delete('/:id', ensureTokenIsValidMiddleware, ensureContactIsValidMiddleware, deleteContactsController)
 
 export default contactRoutes
+
+
