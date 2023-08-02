@@ -28,7 +28,7 @@ const createLoginservice = async (loginData: TLogin): Promise<string> => {
 
     }
 
-    const token: string = jwt.sign({ name: user.name }, process.env.SECRET_KEY!, {
+    const token: string = jwt.sign({ name: user.name, id: user.id }, process.env.SECRET_KEY!, {
         expiresIn: process.env.EXPIRES_IN,
         subject: String(user.id)
     })

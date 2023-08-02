@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { TContact, TContactResponse, TContactUpdateRequest } from "../interfaces/contact.interfaces"
+import { TContact } from "../interfaces/contact.interfaces"
 import createContactService from "../services/contacts/createContacts.services"
 import deleteContactService from "../services/contacts/deleteContacts.service"
 import updateContactService from "../services/contacts/updateContacts.service"
@@ -23,7 +23,7 @@ const retrieveContactsController = async(request: Request, response: Response): 
     const contacts = await retrieveContactService(userId)
 
     return response.json(contacts)
-
+    
 }
 
 const updateContactsController = async(request: Request, response: Response): Promise<Response> => {
@@ -48,4 +48,4 @@ const deleteContactsController = async(request: Request, response: Response) => 
 
 
 
-export { createContactsController, retrieveContactsController, updateContactsController, deleteContactsController }
+export { createContactsController, retrieveContactsController}

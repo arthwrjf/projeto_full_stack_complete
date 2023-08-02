@@ -20,4 +20,5 @@ const contactUserSchemaReponse = z.array(contactSchema.omit({user: true}))
 
 const contactSchemaResponse = userSchemaResponse.extend({contacts: contactUserSchemaReponse})
 
+
 export { contactSchema, contactSchemaRequest, contactSchemaUpdateRequest, contactSchemaResponse, contactUserSchemaReponse }

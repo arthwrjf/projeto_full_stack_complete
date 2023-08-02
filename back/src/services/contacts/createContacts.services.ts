@@ -1,9 +1,10 @@
-import { Repository, getRepository } from "typeorm";
-import { TContact } from "../../interfaces/contact.interfaces";
+import { DeepPartial, Repository, getRepository } from "typeorm";
+import { TContact, TContactRequest, TContactResponse } from "../../interfaces/contact.interfaces";
 import { User } from "../../entities/user.entity";
 import { AppDataSource } from "../../data-source";
 import { Contact } from "../../entities/contact.entity";
 import { contactSchema } from "../../schemas/contact.schemas";
+import { AppError } from "../../error";
 
 
 const createContactService = async (userId: number, contactData: TContact): Promise<TContact> => {
