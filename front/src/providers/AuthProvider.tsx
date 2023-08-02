@@ -1,7 +1,8 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { LoginData } from "../pages/Login/validator";
+import { LoginData } from "../pages/Login/validatorLogin";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom"
+import { RegisterData } from "../pages/Register/validatorRegister";
 
 interface AuthProviderProps {
     children: ReactNode
@@ -9,6 +10,7 @@ interface AuthProviderProps {
 
 interface AuthContextValues {
     signIn: (data: LoginData) => Promise<void>
+    signUp: (data: RegisterData) => Promise<void>
     loading: boolean
 }
 
@@ -60,9 +62,36 @@ export const AuthProvider = ({children}: AuthProviderProps) => {
 
     }
 
+    const signUp = async (data: RegisterData) => {
+
+        try {
+
+            const response = await api.post('/users', data)
+
+            const { token } = response.data
+
+            console.log("teste")
+
+            api.defaults.headers.common.Authorization = `Bearer ${token}`
+
+            localStorage.setItem("contackBook:token", token)
+
+            console.log(response)
+
+            setLoading(false)
+    
+            navigate("/")
+
+        }catch (error) {
+
+            console.log(error)
+
+        }
+    }
+
     return (
 
-        <AuthContext.Provider value={{signIn, loading}}>
+        <AuthContext.Provider value={{signIn, signUp, loading}}>
             {children}
         </AuthContext.Provider>
 

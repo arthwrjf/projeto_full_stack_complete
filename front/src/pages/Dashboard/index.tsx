@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { api } from "../../services/api"
-import jwt, { JwtPayload } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 export interface Contact {
     id: string,
@@ -8,19 +8,31 @@ export interface Contact {
     emailPrincipal: string,
     emailSecondary: string,
     telephonePrincipal: string,
-    telephoneSecondary: string
+    telephoneSecondary: string,
+    createdAt: string,
 }
 
-export interface TokenPayload extends JwtPayload {
-    userId?: string;
-
+interface User {
+    id: number,
+    name: string,
+    emailPrincipal: string,
+    emailSecondary: string,
+    telephonePrincipal: string,
+    telephoneSecondary: string,
+    createdAt: string,
+    contacts: Contact[]
 }
+
+
 
 export const Dashboard = () => {
 
-    const [contacts, setContacts] = useState<Contact[]>([])
+
+ 
     const token = localStorage.getItem("contackBook:token")
 
+    const [contacts, setContacts] = useState<Contact[]>([])
+    const [users, setUsers] = useState<User[]>([])
 
     useEffect(() => {
         const contactData = async () => {
@@ -31,35 +43,53 @@ export const Dashboard = () => {
                     console.error("Access token not found in localStorage.")
                 }
 
-                const decodedToken = jwt.decode(token!) as TokenPayload
+                const decodedToken = jwt.decode(token!) as User
 
-                if (!decodedToken.userId) {
+                const userId = decodedToken.id
+
+                if (!decodedToken.id) {
                     console.error('Invalid or missing "userId" in the token.');
                   }
 
-                const userId = decodedToken.userId
 
-                const response = await api.get<Contact[]>(`/contacts/users/${userId}`, {
+
+                const response = await api.get(`/contacts/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
                 })
 
-                setContacts(response.data)
-
+                console.log("users")
+                setUsers(response.data)
+                setContacts(response.data.contacts)
+ console.log(response.data.contacts)
+ console.log(userId)
             } catch(error) {
 
                 console.error('Error fetching user data:', error)
             }
         }
 
-        contactData()
+       contactData()
         
-    },[token])
+    },[])
 
     return (
         <>
         <h1>Dashboard</h1>
+        <ul>
+            {
+            users?.map((user) =><li key={user.id}>
+            <p>Name: {user.name}</p>
+              <p>Email Principal: {user.emailPrincipal}</p>
+              <p>Email Secondary: {user.emailSecondary}</p>
+              <p>Telephone Principal: {user.telephonePrincipal}</p>
+              <p>Telephone Secondary: {user.telephoneSecondary}</p>
+              <p>Registrado em: {user.createdAt}</p>
+            </li>)
+
+            }
+        </ul>
         <ul>
             {
             contacts.map((contact) => <li key={contact.id}>
@@ -68,6 +98,7 @@ export const Dashboard = () => {
               <p>Email Secondary: {contact.emailSecondary}</p>
               <p>Telephone Principal: {contact.telephonePrincipal}</p>
               <p>Telephone Secondary: {contact.telephoneSecondary}</p>
+              <p>Telephone Secondary: {contact.createdAt}</p>
             </li>)
             }
         </ul>
