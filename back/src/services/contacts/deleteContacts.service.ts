@@ -1,7 +1,6 @@
 import { Repository } from "typeorm";
 import { Contact } from "../../entities/contact.entity";
 import { AppDataSource } from "../../data-source";
-import { AppError } from "../../error";
 
 const deleteContactService = async (contactId: number): Promise<void> => {
 

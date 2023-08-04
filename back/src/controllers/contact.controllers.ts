@@ -48,4 +48,4 @@ const deleteContactsController = async(request: Request, response: Response) => 
 
 
 
-export { createContactsController, retrieveContactsController}
+export { createContactsController, retrieveContactsController, updateContactsController, deleteContactsController }
