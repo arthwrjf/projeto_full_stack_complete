@@ -11,13 +11,13 @@ Obs: nesse desafio utilize Javascript e/ou Typescript
 <pre>
 {
   "id": 1,
-	"name": "teste",
-	"emailPrincipal": "teste@teste.com",
+  "name": "teste",
+  "emailPrincipal": "teste@teste.com",
   "emailSecondary": "Opcional",
   "password": "1234"
-	"telephonePrincipal": "9999999",
+  "telephonePrincipal": "9999999",
   "telephoneSecondary": "Opcional",
-	"createdAt": "data da criação",
+  "createdAt": "data da criação",
 }
 </pre>
 <hr noshade />
