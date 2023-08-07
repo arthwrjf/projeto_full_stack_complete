@@ -93,6 +93,17 @@ Obs: nesse desafio utilize Javascript e/ou Typescript
 <pre>
 {}
 </pre>
+<hr noshade />
+
+<h3>LOGIN - /login</h3>
+<h2>permite acesso do user para atualização de cadastro e criação de contatos</h2>
+<strong>Necessita de um token</strong>
+
+<pre>
+{
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiY29udGF0byAyMiIsImlkIjoyLCJpYXQiOjE2OTEzNzc5NDAsImV4cCI6MTY5MTQ2NDM0MCwic3ViIjoiMiJ9.v1dPz3dHmT4N9TPWc_pcb0MUnfLdmZCgb9aakGjMGJk"
+}
+</pre>
 
 
 
