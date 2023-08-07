@@ -7,6 +7,7 @@ import contactRoutes from './routes/contact.routes'
 import { handleErrors } from './error'
 import cors from "cors"
 
+
 const app: Application = express()
 app.use(express.json())
 
@@ -15,6 +16,16 @@ app.use(cors(
         origin: "http://localhost:5173"
     }
 ))
+
+const swaggerOptions = {
+    swaggerDefinition: {
+        title: "Agenda de Contatos Online",
+        description: "api desenvolvidada para armazenar contatos telefonicos",
+        contact: {
+            name: "arthwrjf"
+        }
+    }
+}
 
 app.use('/users', userRoutes)
 app.use('/login', loginRoutes)

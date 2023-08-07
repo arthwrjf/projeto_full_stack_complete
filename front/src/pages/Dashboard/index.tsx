@@ -4,10 +4,11 @@ import jwt from "jsonwebtoken"
 import { DashboardContainer, UserInfoWrapper, UserName, UserInfoItem, ContactCard, ContactName, ContactInfoItem, EditButton, RemoveButton } from "./style"
 import { ModalEditUser } from "../../components/ModalEditUser"
 import { ModalCreateContact } from "../../components/ModalCreateContact"
+import { ModalEditContact } from "../../components/ModalEditContact"
 
 
 export interface Contact {
-    id: string,
+    id: number,
     name: string,
     emailPrincipal: string,
     emailSecondary: string,
@@ -34,9 +35,12 @@ export const Dashboard = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [isOpenEditModal, setIsOpenEditModal] = useState(false)
     const [isOpenCreateContactModal, setIsOpenCreateContactModal] = useState(false)
+    const [isOpenEditContactModal, setIsOpenEditContactModal] = useState(false)
+    const [editingContact, setEditingContact] = useState<Contact | null>(null)
 
     const toggleEditModal = () => setIsOpenEditModal((prev) => !prev)
     const toggleOpenCreateContactModal = () => setIsOpenCreateContactModal((prev) => !prev)
+    const toggleOpenEditContactModal = () => setIsOpenEditContactModal((prev) => !prev)
 
     
     const handleLogout = () => {
@@ -84,7 +88,7 @@ export const Dashboard = () => {
       contactData()
     }, []);
 
-    const handleRemoveContact = (contactId: string) => {
+    const handleRemoveContact = (contactId: number) => {
       api
         .delete(`/contacts/${contactId}`, {
           headers: {
@@ -101,13 +105,24 @@ export const Dashboard = () => {
         });
     };
 
+    const handleOpenEditContactModal = (contact: Contact) => {
+      setEditingContact(contact)
+      toggleOpenEditContactModal()
+    };
+
     return (
       <DashboardContainer>
         <h1>Dashboard</h1>
         {
             isOpenEditModal && <ModalEditUser setUsers={setUsers} toggleEditModal={toggleEditModal}></ModalEditUser> 
-
         }
+        {
+            isOpenCreateContactModal && <ModalCreateContact setContacts={setContacts} toggleOpenCreateContactModal={toggleOpenCreateContactModal}></ModalCreateContact> 
+        }
+        {
+           editingContact && isOpenEditContactModal && <ModalEditContact contactToEdit={editingContact} setContacts={setContacts} toggleOpenEditContactModal={toggleOpenEditContactModal}></ModalEditContact> 
+        }
+
         <ul>
           {users.map((user) => (
             <UserInfoWrapper key={user.id}>
@@ -125,22 +140,18 @@ export const Dashboard = () => {
         <EditButton onClick={toggleOpenCreateContactModal}>Criar Contato</EditButton>
         <ul>
           {contacts.map((contact) => (
-            <ContactCard id={contact.id}>
+            <ContactCard key={contact.id}>
               <ContactName>Nome: {contact.name}</ContactName>
               <ContactInfoItem>Email Principal: {contact.emailPrincipal}</ContactInfoItem>
               <ContactInfoItem>Email Secundário: {contact.emailSecondary}</ContactInfoItem>
               <ContactInfoItem>Telephone Principal: {contact.telephonePrincipal}</ContactInfoItem>
               <ContactInfoItem>Telephone Secundário: {contact.telephoneSecondary}</ContactInfoItem>
               <ContactInfoItem>Criado em: {contact.createdAt}</ContactInfoItem>
-              <EditButton>Editar</EditButton>
+              <EditButton onClick={() => handleOpenEditContactModal(contact)}>Editar</EditButton>
               <RemoveButton onClick={() => handleRemoveContact(contact.id)}>Remover</RemoveButton>
             </ContactCard>
           ))}
         </ul>
-        {
-            isOpenCreateContactModal && <ModalCreateContact setContacts={setContacts} toggleOpenCreateContactModal={toggleOpenCreateContactModal}></ModalCreateContact> 
-
-        }
      </DashboardContainer> 
     )
 }
