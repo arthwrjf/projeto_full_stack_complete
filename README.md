@@ -71,6 +71,8 @@ Obs: nesse desafio utilize Javascript e/ou Typescript
 <h3>PATCH - /users/{ID}</h3>
 <h2>Atualiza um user por ID</h2>
 <strong>Necessita de um token</strong>
+
+<pre>
 {
   "id": 1,
   "name": "teste update",
