@@ -49,4 +49,48 @@ Obs: nesse desafio utilize Javascript e/ou Typescript
   "createdAt": "data da criação",
  }
 </pre>
+<hr noshade />
+
+<h3>GET - /users/{ID}</h3>
+<h2>Listar users por ID</h2>
+<strong>Necessita de um token</strong>
+
+<pre>
+{
+  "id": 1,
+  "name": "teste",
+  "emailPrincipal": "teste@teste.com",
+  "emailSecondary": "Opcional",
+  "telephonePrincipal": "9999999",
+  "telephoneSecondary": "Opcional",
+  "createdAt": "data da criação",
+}
+</pre>
+<hr noshade />
+
+<h3>PATCH - /users/{ID}</h3>
+<h2>Atualiza um user por ID</h2>
+<strong>Necessita de um token</strong>
+{
+  "id": 1,
+  "name": "teste update",
+  "emailPrincipal": "testeupdate@teste.com",
+  "emailSecondary": "Opcional",
+  "telephonePrincipal": "9999999",
+  "telephoneSecondary": "Opcional",
+  "createdAt": "data da criação",
+}
+</pre>
+
+<hr noshade />
+
+<h3>DELETE - /users/{ID}</h3>
+<h2>Deleta um user por ID</h2>
+<strong>Necessita de um token</strong>
+
+<pre>
+{}
+</pre>
+
+
 
